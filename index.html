@@ -11,6 +11,11 @@
   <body>
     <div id="app">
       <div class="nav-bar"></div>
+
+      <!--Imprimimos el valor de nuestra cart-->
+      <div class="cart">Cart({{ cart }})
+        <br> <br> Total Price:{{ priceTotal }}
+      </div>
       
       <div class="product-display">
         <div class="product-container">
@@ -19,19 +24,19 @@
           </div>
           <div class="product-info">
             <h1>{{ product }}</h1>
-            <!--Con v-show toggling elements visibility, no desaparecen/aparecen 
-              del DOM como en el caso de if/else
-              <p v-show="inStock">In Stock</p>-->
-
-
-            <!--Si inStock es true-->
-            <p v-if="inventory > 10">In Stock</p>
-            <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+            <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
-            
-            <!--Reto-->
-            <p v-if="onSale">On Sale!</p>
-            
+            <ul>
+              <li v-for="detail in details">{{ detail }}</li>
+            </ul>
+
+            <div v-for="variant in variants" :key="variant.id" 
+            @mouseover="updateImage(variant.image)">{{ variant.color }}</div>
+            <!--v-on:click="cart += 1-->
+            <button class="button" v-on:click="addToCart(variants.color)">Add to Cart</button>
+
+            <!--RETO CURSO-->
+            <button class="button" v-on:click="removeItem">Remove Item</button>
           </div>
         </div>
       </div>
